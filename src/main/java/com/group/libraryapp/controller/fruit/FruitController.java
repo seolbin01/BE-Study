@@ -44,8 +44,8 @@ public class FruitController {
         String salesSql = "SELECT sum(price) FROM fruit WHERE is_sold = 1";
         String notSalesSql = "SELECT sum(price) FROM fruit WHERE is_sold = 0";
 
-        Long salesAmount = jdbcTemplate.queryForObject(salesSql, (rs, rowNum) -> rs.getLong("salesAmount"));
-        Long notSalesAmount = jdbcTemplate.queryForObject(notSalesSql, (rs, rowNum) -> rs.getLong("notSalesAmount"));
+        Long salesAmount = jdbcTemplate.queryForObject(salesSql, Long.class);
+        Long notSalesAmount = jdbcTemplate.queryForObject(notSalesSql, Long.class);
 
         return new FruitStatResponse(salesAmount, notSalesAmount);
     }
