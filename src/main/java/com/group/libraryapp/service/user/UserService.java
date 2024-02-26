@@ -13,10 +13,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserService(JdbcTemplate jdbcTemplate) {
-         userRepository = new UserRepository(jdbcTemplate);
+
+        userRepository = new UserRepository(jdbcTemplate);
     }
 
     public void saveUser(UserCreateRequest request) {
+
         userRepository.saveUser(request.getName(), request.getAge());
     }
 
