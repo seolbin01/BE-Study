@@ -1,9 +1,21 @@
 package com.group.libraryapp.domain.user;
 
+import javax.persistence.*;
+
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id = null;
+
+    @Column(nullable = false, length = 20, name = "name")  //name varchar(20) , 이름이 똑같기 때문에 name = "name" 은 생략 가능
     private String name;
+
+    //age는 테이블에 있는 age 와 동일한 조건, 동일한 이름이기 때문에 @Column 안써도 됨.
     private Integer age;
+
+    protected User() {}  //jpa 객체(즉, 엔티티 객체)는 매개변수가 없는 기본 생성자가 꼭 필요하다.
 
     public User(String name, Integer age) {
         if(name == null || name.isBlank()) {
@@ -19,5 +31,13 @@ public class User {
 
     public Integer getAge() {
         return age;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
     }
 }
