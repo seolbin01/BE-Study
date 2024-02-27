@@ -6,7 +6,7 @@ public class FruitCreateRequest {
 
     private String name;
     private LocalDate warehousingDate;
-    private Long price;
+    private Integer price;
 
 
     public String getName() {
@@ -17,7 +17,7 @@ public class FruitCreateRequest {
         return warehousingDate;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }
