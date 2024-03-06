@@ -19,7 +19,7 @@ public class User {
     //age는 테이블에 있는 age 와 동일한 조건, 동일한 이름이기 때문에 @Column 안써도 됨.
     private Integer age;
 
-    @OneToMany(mappedBy = "user") // 1:n 관계
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) // 1:n 관계
     private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
 
     protected User() {}  //jpa 객체(즉, 엔티티 객체)는 매개변수가 없는 기본 생성자가 꼭 필요하다.
@@ -46,6 +46,19 @@ public class User {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    public void loanBook(String bookName) {
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+    }
+
+
+    public void returnBook(String bookName) {
+        UserLoanHistory targetHistory = this.userLoanHistories.stream()
+                .filter(history -> history.getBookName().equals(bookName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        targetHistory.doReturn();
     }
 
 }

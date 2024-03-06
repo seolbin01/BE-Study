@@ -46,8 +46,10 @@ public class BookService {
         User user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalArgumentException::new);
 
-        // 5. 유저 정보와 책 정보를 기반으로 UserLoanHistory를 저장한다.
-        userLoanHistoryRepository.save(new UserLoanHistory(user, book.getName()));
+        user.loanBook(book.getName());  //user 객체와 userloanhistory가 직접적으로 협력하게 됨 !! (도메인 계층에 비지니스 로직이 들어갔다)
+
+//        // 5. 유저 정보와 책 정보를 기반으로 UserLoanHistory를 저장한다.
+//        userLoanHistoryRepository.save(new UserLoanHistory(user, book.getName()));
 
     }
 
@@ -57,11 +59,12 @@ public class BookService {
         User user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalArgumentException::new);
 
-        UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName())
-                .orElseThrow(IllegalArgumentException::new);
-        history.doReturn();
-        //userLoanHistoryRepository.save(history); 영속성 컨텍스트가 변경을 감지하여 이 줄을 안써도 저장된다.
+//        UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName())
+//                .orElseThrow(IllegalArgumentException::new);
+//        history.doReturn();
+//        //userLoanHistoryRepository.save(history); 영속성 컨텍스트가 변경을 감지하여 이 줄을 안써도 저장된다.
 
+        user.returnBook(request.getBookName()); //(도메인 계층에 비지니스 로직이 들어갔다)
     }
 
 
